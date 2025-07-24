@@ -9,7 +9,7 @@ namespace SK_No_Sympathy_For_Prisoners
     {
         public Mod(ModContentPack content) : base(content)
         {
-            Harmony instance = new Harmony("rimworld.sk.xenogermscostneutroamine");
+            Harmony instance = new Harmony("rimworld.sk.noprisonersympathy");
             HarmonyPatcher.instance = instance;
 
             // Fires when all Defs are loaded
