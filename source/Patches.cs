@@ -129,5 +129,14 @@ namespace SK_No_Sympathy_For_Prisoners
             return true;
         }
 
+        public static bool ReportViolationPrefixPatch(Pawn pawn, Pawn billDoer, Faction factionToInform, int goodwillImpact, HistoryEventDef overrideEventDef)
+        {
+            if (overrideEventDef == null && factionToInform != null && billDoer != null && billDoer.Faction == Faction.OfPlayer && pawn.IsPrisoner) 
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
 }

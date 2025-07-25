@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <SK.noprisonersympathy.ModSettings.organHarvsetingNegativeCheckboxLabel>Factions don't care about organ harvesting</SK.noprisonersympathy.ModSettings.organHarvsetingNegativeCheckboxLabel>
+  <SK.noprisonersympathy.ModSettings.organHarvsetingNegativeCheckboxTooltip>When enabled, a patch will be applied to remove all negative goodwill attained from organ harvesting (Requires a game restart)</SK.noprisonersympathy.ModSettings.organHarvsetingNegativeCheckboxTooltip>
+</LanguageData>

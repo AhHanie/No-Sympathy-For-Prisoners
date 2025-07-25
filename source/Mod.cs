@@ -1,7 +1,8 @@
 ﻿using HarmonyLib;
-using Verse;
 using RimWorld;
 using System.Collections.Generic;
+using UnityEngine;
+using Verse;
 
 namespace SK_No_Sympathy_For_Prisoners
 {
@@ -16,9 +17,20 @@ namespace SK_No_Sympathy_For_Prisoners
             LongEventHandler.ExecuteWhenFinished(Init);
         }
 
+        public override string SettingsCategory()
+        {
+            return "No Sympathy For Prisoners";
+        }
+
+        public override void DoSettingsWindowContents(Rect rect)
+        {
+            ModSettingsWindow.Draw(rect);
+            base.DoSettingsWindowContents(rect);
+        }
+
         public void Init()
         {
-            // GetSettings<ModSettings>();
+            GetSettings<ModSettings>();
             HarmonyPatcher.PatchVanillaMethods();
 
             // Executio
