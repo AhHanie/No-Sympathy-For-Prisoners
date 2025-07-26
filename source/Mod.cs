@@ -13,8 +13,7 @@ namespace SK_No_Sympathy_For_Prisoners
             Harmony instance = new Harmony("rimworld.sk.noprisonersympathy");
             HarmonyPatcher.instance = instance;
 
-            // Fires when all Defs are loaded
-            LongEventHandler.ExecuteWhenFinished(Init);
+            LongEventHandler.QueueLongEvent(Init, "SK_No_Sympathy_For_Prisoners.Init", true, null);
         }
 
         public override string SettingsCategory()
