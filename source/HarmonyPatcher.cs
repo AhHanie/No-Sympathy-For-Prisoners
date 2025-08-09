@@ -35,6 +35,11 @@ namespace SK_No_Sympathy_For_Prisoners
             HarmonyMethod tryGiveThoughtsPrefixPatch = new HarmonyMethod(typeof(Patches).GetMethod("TryGiveThoughtsPrefixPatch"));
             instance.Patch(tryGiveThoughtsMethod, tryGiveThoughtsPrefixPatch);
 
+            // Patch Corpse.ButcherProducts method
+            MethodInfo butcherProductsMethod = AccessTools.Method(typeof(Corpse), "ButcherProducts");
+            HarmonyMethod butcherProductsPrefixPatch = new HarmonyMethod(typeof(Patches).GetMethod("ButcherProductsPrefixPatch"));
+            instance.Patch(butcherProductsMethod, butcherProductsPrefixPatch);
+
             // Patch RecipeWorker.ReportViolation method
             if (ModSettings.disableOrganHarvestingNegativeGoodwill.Value)
             {

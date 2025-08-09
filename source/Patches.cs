@@ -44,12 +44,12 @@ namespace SK_No_Sympathy_For_Prisoners
                 return false; 
             }
 
-            if (targetOraganHarvestingHistoryEvents.Contains(ev.def) && blacklistOraganHarvestingPrecepts.Contains(precept.def) && lastVictim.IsPrisoner)
+            if (targetOraganHarvestingHistoryEvents.Contains(ev.def) && blacklistOraganHarvestingPrecepts.Contains(precept.def) && lastVictim != null && lastVictim.IsPrisoner)
             {
                 return false;
             }
 
-            if (targetCannibalismHistoryEvents.Contains(ev.def) && blacklistCannibalismPrecepts.Contains(precept.def) && lastVictim.IsPrisoner)
+            if (targetCannibalismHistoryEvents.Contains(ev.def) && blacklistCannibalismPrecepts.Contains(precept.def) && lastVictim != null && lastVictim.IsPrisoner)
             {
                 return false;
             }
@@ -69,17 +69,25 @@ namespace SK_No_Sympathy_For_Prisoners
                 return false;
             }
 
-            if (targetOraganHarvestingHistoryEvents.Contains(ev.def) && blacklistOraganHarvestingPrecepts.Contains(precept.def) && lastVictim.IsPrisoner)
+            if (targetOraganHarvestingHistoryEvents.Contains(ev.def) && blacklistOraganHarvestingPrecepts.Contains(precept.def) && lastVictim != null && lastVictim.IsPrisoner)
             {
                 return false;
             }
 
-            if (targetCannibalismHistoryEvents.Contains(ev.def) && blacklistCannibalismPrecepts.Contains(precept.def) && lastVictim.IsPrisoner)
+            if (targetCannibalismHistoryEvents.Contains(ev.def) && blacklistCannibalismPrecepts.Contains(precept.def) && lastVictim != null && lastVictim.IsPrisoner)
             {
                 return false;
             }
 
             return true;
+        }
+
+        public static void ButcherProductsPrefixPatch(Corpse __instance)
+        {
+            if (__instance.InnerPawn.IsPrisoner)
+            {
+                lastVictim = __instance.InnerPawn;
+            }
         }
 
         // Banished Patches
