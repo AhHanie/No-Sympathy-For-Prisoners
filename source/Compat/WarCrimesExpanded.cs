@@ -4,6 +4,7 @@ using System.Reflection;
 using Verse;
 using System.Collections.Generic;
 using RimWorld;
+using System.Linq;
 
 namespace SK_No_Sympathy_For_Prisoners.Compat
 {
@@ -58,8 +59,10 @@ namespace SK_No_Sympathy_For_Prisoners.Compat
 
         public static void Init()
         {
-            List<HistoryEventDef> tortureEvents = new List<HistoryEventDef>() { WCEHistoryEventDefOf.WCE2_TortureGuest, WCEHistoryEventDefOf.WCE2_TorturePrisonerGuilty };
-            List<PreceptDef> torturePrecepts = new List<PreceptDef>() { WCEPreceptDefOf.WCE2_Torture_Vanilla, WCEPreceptDefOf.WCE2_Torture_Abhorrent, WCEPreceptDefOf.WCE2_Torture_Horrible, WCEPreceptDefOf.WCE2_Torture_HorribleInnocent };
+            List<string> historyEventDefNames = new List<string>() { "WCE2_TortureGuest", "WCE2_TorturePrisonerGuilty" };
+            List<HistoryEventDef> tortureEvents = DefDatabase<HistoryEventDef>.AllDefsListForReading.Where(def => historyEventDefNames.Contains(def.defName)).ToList();
+            List<string> preceptDefNames = new List<string>() { "WCE2_Torture_Vanilla", "WCE2_Torture_Abhorrent", "WCE2_Torture_Horrible", "WCE2_Torture_HorribleInnocent" };
+            List<PreceptDef> torturePrecepts = DefDatabase<PreceptDef>.AllDefsListForReading.Where(def => preceptDefNames.Contains(def.defName)).ToList();
             Patches.modDefined.Add("mersid.wce2updated.core", (torturePrecepts, tortureEvents));
         }
     }
