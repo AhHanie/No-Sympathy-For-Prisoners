@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -9,7 +10,7 @@ namespace SK_No_Sympathy_For_Prisoners
 {
     public class Patches
     {
-        private static Pawn lastVictim;
+        public static Pawn lastVictim;
 
         // Execution
         public static List<PreceptDef> blacklistExecutionPrecepts = new List<PreceptDef>();
@@ -26,6 +27,9 @@ namespace SK_No_Sympathy_For_Prisoners
         // Cannibalism
         public static List<PreceptDef> blacklistCannibalismPrecepts = new List<PreceptDef>();
         public static List<HistoryEventDef> targetCannibalismHistoryEvents;
+
+        // Mod Defined
+        public static Dictionary<string, (List<PreceptDef>, List<HistoryEventDef>)> modDefined = new Dictionary<string, (List<PreceptDef>, List<HistoryEventDef>)>();
 
         public static void GiveThoughtsForPawnOrganHarvestedPrefix(Pawn victim)
         {
@@ -54,6 +58,14 @@ namespace SK_No_Sympathy_For_Prisoners
                 return false;
             }
 
+            foreach ((List<PreceptDef>, List<HistoryEventDef>) preceptsHistory in modDefined.Values)
+            {
+                if (preceptsHistory.Item2.Contains(ev.def) && preceptsHistory.Item1.Contains(precept.def) && lastVictim != null && lastVictim.IsPrisoner)
+                {
+                    return false;
+                }
+            }
+
             return true;
         }
 
@@ -77,6 +89,14 @@ namespace SK_No_Sympathy_For_Prisoners
             if (targetCannibalismHistoryEvents.Contains(ev.def) && blacklistCannibalismPrecepts.Contains(precept.def) && lastVictim != null && lastVictim.IsPrisoner)
             {
                 return false;
+            }
+
+            foreach ((List<PreceptDef>, List<HistoryEventDef>) preceptsHistory in modDefined.Values)
+            {
+                if (preceptsHistory.Item2.Contains(ev.def) && preceptsHistory.Item1.Contains(precept.def) && lastVictim != null && lastVictim.IsPrisoner)
+                {
+                    return false;
+                }
             }
 
             return true;

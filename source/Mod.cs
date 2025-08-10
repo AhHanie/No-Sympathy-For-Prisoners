@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using RimWorld;
+using SK_No_Sympathy_For_Prisoners.Compat;
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
@@ -8,10 +9,10 @@ namespace SK_No_Sympathy_For_Prisoners
 {
     public class Mod: Verse.Mod
     {
+        public static Harmony instance;
         public Mod(ModContentPack content) : base(content)
         {
-            Harmony instance = new Harmony("rimworld.sk.noprisonersympathy");
-            HarmonyPatcher.instance = instance;
+            instance = new Harmony("rimworld.sk.noprisonersympathy");
 
             LongEventHandler.QueueLongEvent(Init, "SK_No_Sympathy_For_Prisoners.Init", true, null);
         }
@@ -30,7 +31,13 @@ namespace SK_No_Sympathy_For_Prisoners
         public void Init()
         {
             GetSettings<ModSettings>();
-            HarmonyPatcher.PatchVanillaMethods();
+            HarmonyPatcher.PatchVanillaMethods(instance);
+
+            if (WarCrimesExpanded.IsActive())
+            {
+                WarCrimesExpanded.PatchAllModMethods(instance);
+                WarCrimesExpanded.Init();
+            }
 
             // Executio
             List<string> blacklistedExecutionPreceptDefNames = new List<string>() { "Execution_Classic", "Execution_HorribleIfInnocent", "Execution_Horrible", "Execution_Abhorrent" };

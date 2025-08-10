@@ -7,7 +7,7 @@
     <ProjectGuid>{1C34FD43-587C-4B9C-B384-A1FE894D1326}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>No_Sympathy_For_Prisoners</RootNamespace>
+    <RootNamespace>SK_No_Sympathy_For_Prisoners</RootNamespace>
     <AssemblyName>No Sympathy For Prisoners</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -60,6 +60,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compat\WarCrimesExpanded.cs" />
+    <Compile Include="Compat\WCEHistoryEventDefOf.cs" />
+    <Compile Include="Compat\WCEPreceptDefOf.cs" />
     <Compile Include="HarmonyPatcher.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="ModSettings.cs" />

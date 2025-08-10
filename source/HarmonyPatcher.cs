@@ -7,8 +7,7 @@ namespace SK_No_Sympathy_For_Prisoners
 {
     public class HarmonyPatcher
     {
-        public static Harmony instance;
-        public static void PatchVanillaMethods()
+        public static void PatchVanillaMethods(Harmony instance)
         {
             // Patch ThoughtUtility.GiveThoughtsForPawnOrganHarvested method
             MethodInfo giveThoughtsForPawnOrganHarvestedMethod = AccessTools.Method(typeof(ThoughtUtility), "GiveThoughtsForPawnOrganHarvested");
