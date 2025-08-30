@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
+using UnityEngine;
 using Verse;
 
 namespace SK_No_Sympathy_For_Prisoners
@@ -31,6 +32,8 @@ namespace SK_No_Sympathy_For_Prisoners
         // Mod Defined
         public static Dictionary<string, (List<PreceptDef>, List<HistoryEventDef>)> modDefined = new Dictionary<string, (List<PreceptDef>, List<HistoryEventDef>)>();
 
+        public static bool modifyMoodOffset = false;
+
         public static void GiveThoughtsForPawnOrganHarvestedPrefix(Pawn victim)
         {
             lastVictim = victim;
@@ -40,21 +43,41 @@ namespace SK_No_Sympathy_For_Prisoners
         {
             if (targetExecutionHistoryEvents.Contains(ev.def) && blacklistExecutionPrecepts.Contains(precept.def))
             {
+                if (ModSettings.affectMoodInstead)
+                {
+                    modifyMoodOffset = true;
+                    return true;
+                }
                 return false;
             }
 
-            if (targetSlaveryHistoryEvents.Contains(ev.def) && blacklistSlaveryPrecepts.Contains(precept.def)) 
-            { 
-                return false; 
+            if (targetSlaveryHistoryEvents.Contains(ev.def) && blacklistSlaveryPrecepts.Contains(precept.def))
+            {
+                if (ModSettings.affectMoodInstead)
+                {
+                    modifyMoodOffset = true;
+                    return true;
+                }
+                return false;
             }
 
             if (targetOraganHarvestingHistoryEvents.Contains(ev.def) && blacklistOraganHarvestingPrecepts.Contains(precept.def) && lastVictim != null && lastVictim.IsPrisoner)
             {
+                if (ModSettings.affectMoodInstead)
+                {
+                    modifyMoodOffset = true;
+                    return true;
+                }
                 return false;
             }
 
             if (targetCannibalismHistoryEvents.Contains(ev.def) && blacklistCannibalismPrecepts.Contains(precept.def) && lastVictim != null && lastVictim.IsPrisoner)
             {
+                if (ModSettings.affectMoodInstead)
+                {
+                    modifyMoodOffset = true;
+                    return true;
+                }
                 return false;
             }
 
@@ -62,32 +85,62 @@ namespace SK_No_Sympathy_For_Prisoners
             {
                 if (preceptsHistory.Item2.Contains(ev.def) && preceptsHistory.Item1.Contains(precept.def) && lastVictim != null && lastVictim.IsPrisoner)
                 {
+                    if (ModSettings.affectMoodInstead)
+                    {
+                        modifyMoodOffset = true;
+                        return true;
+                    }
                     return false;
                 }
             }
 
             return true;
+        }
+
+        public static void NotifyMemberWitnessedActionPostfix()
+        {
+            modifyMoodOffset = false;
         }
 
         public static bool NotifyMemberTookActionPrefix(HistoryEvent ev, Precept precept)
         {
             if (targetExecutionHistoryEvents.Contains(ev.def) && blacklistExecutionPrecepts.Contains(precept.def))
             {
+                if (ModSettings.affectMoodInstead)
+                {
+                    modifyMoodOffset = true;
+                    return true;
+                }
                 return false;
             }
 
             if (targetSlaveryHistoryEvents.Contains(ev.def) && blacklistSlaveryPrecepts.Contains(precept.def))
             {
+                if (ModSettings.affectMoodInstead)
+                {
+                    modifyMoodOffset = true;
+                    return true;
+                }
                 return false;
             }
 
             if (targetOraganHarvestingHistoryEvents.Contains(ev.def) && blacklistOraganHarvestingPrecepts.Contains(precept.def) && lastVictim != null && lastVictim.IsPrisoner)
             {
+                if (ModSettings.affectMoodInstead)
+                {
+                    modifyMoodOffset = true;
+                    return true;
+                }
                 return false;
             }
 
             if (targetCannibalismHistoryEvents.Contains(ev.def) && blacklistCannibalismPrecepts.Contains(precept.def) && lastVictim != null && lastVictim.IsPrisoner)
             {
+                if (ModSettings.affectMoodInstead)
+                {
+                    modifyMoodOffset = true;
+                    return true;
+                }
                 return false;
             }
 
@@ -95,12 +148,38 @@ namespace SK_No_Sympathy_For_Prisoners
             {
                 if (preceptsHistory.Item2.Contains(ev.def) && preceptsHistory.Item1.Contains(precept.def) && lastVictim != null && lastVictim.IsPrisoner)
                 {
+                    if (ModSettings.affectMoodInstead)
+                    {
+                        modifyMoodOffset = true;
+                        return true;
+                    }
                     return false;
                 }
             }
 
             return true;
         }
+
+        public static void NotifyMemberTookActionPostfix()
+        {
+            modifyMoodOffset = false;
+        }
+
+        public static void TryGainMemoryPostfix(MemoryThoughtHandler __instance, Thought_Memory newThought)
+        {
+            if (modifyMoodOffset)
+            {
+                Thought_Memory mem = __instance.GetFirstMemoryOfDef(newThought.def);
+                float currentOffset = mem.MoodOffset();
+                if (currentOffset < 0)
+                {
+                    // Calculate counteract value to make final offset = currentOffset * (percentage/100)
+                    float counteract = -currentOffset * (ModSettings.moodReductionPercentage / 100f);
+                    newThought.moodOffset = Mathf.RoundToInt(counteract);
+                }
+            }
+        }
+
 
         public static void ButcherProductsPrefixPatch(Corpse __instance)
         {
@@ -159,7 +238,7 @@ namespace SK_No_Sympathy_For_Prisoners
 
         public static bool ReportViolationPrefixPatch(Pawn pawn, Pawn billDoer, Faction factionToInform, int goodwillImpact, HistoryEventDef overrideEventDef)
         {
-            if (overrideEventDef == null && factionToInform != null && billDoer != null && billDoer.Faction == Faction.OfPlayer && pawn.IsPrisoner) 
+            if (overrideEventDef == null && factionToInform != null && billDoer != null && billDoer.Faction == Faction.OfPlayer && pawn.IsPrisoner)
             {
                 return false;
             }
