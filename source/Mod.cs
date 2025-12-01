@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using RimWorld;
 using SK_No_Sympathy_For_Prisoners.Compat;
+using SK_No_Sympathy_For_Prisoners.Patches;
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
@@ -31,33 +32,32 @@ namespace SK_No_Sympathy_For_Prisoners
         public void Init()
         {
             GetSettings<ModSettings>();
-            HarmonyPatcher.PatchVanillaMethods(instance);
-
-            if (WarCrimesExpanded.IsActive())
+            if (WarCrimesExpandedCompat.IsActive())
             {
-                WarCrimesExpanded.PatchAllModMethods(instance);
-                WarCrimesExpanded.Init();
+                WarCrimesExpandedCompat.Init();
             }
+
+            instance.PatchAll();
 
             // Executio
             List<string> blacklistedExecutionPreceptDefNames = new List<string>() { "Execution_Classic", "Execution_HorribleIfInnocent", "Execution_Horrible", "Execution_Abhorrent" };
-            Patches.blacklistExecutionPrecepts.AddRange(DefDatabase<PreceptDef>.AllDefsListForReading.FindAll(def => blacklistedExecutionPreceptDefNames.Contains(def.defName)));
-            Patches.targetExecutionHistoryEvents = new List<HistoryEventDef>() { HistoryEventDefOf.ExecutedPrisoner, HistoryEventDefOf.ExecutedPrisonerGuilty, HistoryEventDefOf.ExecutedPrisonerInnocent, HistoryEventDefOf.InnocentPrisonerDied };
+            PatchState.blacklistExecutionPrecepts.AddRange(DefDatabase<PreceptDef>.AllDefsListForReading.FindAll(def => blacklistedExecutionPreceptDefNames.Contains(def.defName)));
+            PatchState.targetExecutionHistoryEvents.AddRange(new List<HistoryEventDef>() { HistoryEventDefOf.ExecutedPrisoner, HistoryEventDefOf.ExecutedPrisonerGuilty, HistoryEventDefOf.ExecutedPrisonerInnocent, HistoryEventDefOf.InnocentPrisonerDied });
 
             // Slavery
             List<string> blacklistedSlaveryPreceptDefNames = new List<string>() { "Slavery_Classic", "Slavery_Abhorrent", "Slavery_Horrible", "Slavery_Disapproved" };
-            Patches.blacklistSlaveryPrecepts.AddRange(DefDatabase<PreceptDef>.AllDefsListForReading.FindAll(def => blacklistedSlaveryPreceptDefNames.Contains(def.defName)));
-            Patches.targetSlaveryHistoryEvents = new List<HistoryEventDef>() { HistoryEventDefOf.SoldSlave, HistoryEventDefOf.EnslavedPrisoner, HistoryEventDefOf.EnslavedPrisonerNotPreviouslyEnslaved };
+            PatchState.blacklistSlaveryPrecepts.AddRange(DefDatabase<PreceptDef>.AllDefsListForReading.FindAll(def => blacklistedSlaveryPreceptDefNames.Contains(def.defName)));
+            PatchState.targetSlaveryHistoryEvents.AddRange(new List<HistoryEventDef>() { HistoryEventDefOf.SoldSlave, HistoryEventDefOf.EnslavedPrisoner, HistoryEventDefOf.EnslavedPrisonerNotPreviouslyEnslaved });
 
             // Organ Harvesting
             List<string> blacklistedOrganHarvestingPreceptDefNames = new List<string>() { "OrganUse_Classic", "OrganUse_HorribleNoSell", "OrganUse_HorribleSellOK", "OrganUse_Abhorrent" };
-            Patches.blacklistOraganHarvestingPrecepts.AddRange(DefDatabase<PreceptDef>.AllDefsListForReading.FindAll(def => blacklistedOrganHarvestingPreceptDefNames.Contains(def.defName)));
-            Patches.targetOraganHarvestingHistoryEvents = new List<HistoryEventDef>() { HistoryEventDefOf.HarvestedOrgan, HistoryEventDefOf.HarvestedOrganFromGuest };
+            PatchState.blacklistOraganHarvestingPrecepts.AddRange(DefDatabase<PreceptDef>.AllDefsListForReading.FindAll(def => blacklistedOrganHarvestingPreceptDefNames.Contains(def.defName)));
+            PatchState.targetOraganHarvestingHistoryEvents.AddRange(new List<HistoryEventDef>() { HistoryEventDefOf.HarvestedOrgan, HistoryEventDefOf.HarvestedOrganFromGuest });
 
             // Cannibalism
             List<string> blacklistedCannibalismPreceptDefNames = new List<string>() { "Cannibalism_Classic", "Cannibalism_Abhorrent", "Cannibalism_Horrible", "Cannibalism_Disapproved" };
-            Patches.blacklistCannibalismPrecepts.AddRange(DefDatabase<PreceptDef>.AllDefsListForReading.FindAll(def => blacklistedCannibalismPreceptDefNames.Contains(def.defName)));
-            Patches.targetCannibalismHistoryEvents = new List<HistoryEventDef>() { HistoryEventDefOf.ButcheredHuman };
+            PatchState.blacklistCannibalismPrecepts.AddRange(DefDatabase<PreceptDef>.AllDefsListForReading.FindAll(def => blacklistedCannibalismPreceptDefNames.Contains(def.defName)));
+            PatchState.targetCannibalismHistoryEvents.Add(HistoryEventDefOf.ButcheredHuman);
         }
     }
 }

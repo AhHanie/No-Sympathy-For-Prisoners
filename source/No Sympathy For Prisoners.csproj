@@ -57,12 +57,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compat\WarCrimesExpanded.cs" />
-    <Compile Include="HarmonyPatcher.cs" />
+    <Compile Include="Compat\BeatYourPrisonersCompat.cs" />
+    <Compile Include="Compat\WarCrimesExpandedCompat.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="ModSettings.cs" />
     <Compile Include="ModSettingsWindow.cs" />
-    <Compile Include="Patches.cs" />
+    <Compile Include="Patches\Compat\BeatYourPrisoners\BeatPrisonersUtilityPatches.cs" />
+    <Compile Include="Patches\Compat\WarCrimesExpanded\RecipeBludgeonBodyPartPatches.cs" />
+    <Compile Include="Patches\Compat\WarCrimesExpanded\RecipeInstallImplantBrandPatches.cs" />
+    <Compile Include="Patches\Compat\WarCrimesExpanded\RecipeInstallImplantMangleBodyPartPatches.cs" />
+    <Compile Include="Patches\Compat\WarCrimesExpanded\RecipeInstallImplantMutilateFaceAcidPatches.cs" />
+    <Compile Include="Patches\Compat\WarCrimesExpanded\RecipeInstallImplantPracticeSurgeryPatches.cs" />
+    <Compile Include="Patches\Compat\WarCrimesExpanded\RecipeInstallImplantWithThoughtPatches.cs" />
+    <Compile Include="Patches\Compat\WarCrimesExpanded\RecipeRemoveBodyPartTorturePatches.cs" />
+    <Compile Include="Patches\Compat\WarCrimesExpanded\RecipeRemoveHediffMutilationPatches.cs" />
+    <Compile Include="Patches\CorpsePatches.cs" />
+    <Compile Include="Patches\MemoryThoughtHandlerPatches.cs" />
+    <Compile Include="Patches\PatchState.cs" />
+    <Compile Include="Patches\PawnBanishUtilityPatches.cs" />
+    <Compile Include="Patches\PawnDiedOrDownedThoughtsUtilityPatches.cs" />
+    <Compile Include="Patches\PreceptCompKnowsMemoryThoughtPatches.cs" />
+    <Compile Include="Patches\PreceptCompSelfTookMemoryThoughtPatches.cs" />
+    <Compile Include="Patches\RecipeWorkerPatches.cs" />
+    <Compile Include="Patches\ThoughtUtilityPatches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
