@@ -15,6 +15,10 @@ namespace SK_No_Sympathy_For_Prisoners
                                    ref ModSettings.disableOrganHarvestingNegativeGoodwill,
                                    "SK.noprisonersympathy.ModSettings.organHarvsetingNegativeCheckboxTooltip".Translate());
 
+            listing.CheckboxLabeled("SK.noprisonersympathy.ModSettings.disableOrganHarvestingColonistsMoodDebuffCheckboxLabel".Translate(),
+                                   ref ModSettings.disableOrganHarvestingColonistsMoodDebuff,
+                                   "SK.noprisonersympathy.ModSettings.disableOrganHarvestingColonistsMoodDebuffCheckboxTooltip".Translate());
+
             listing.Gap(12f);
 
             // Affect mood instead checkbox

@@ -15,7 +15,7 @@ namespace SK_No_Sympathy_For_Prisoners
         {
             instance = new Harmony("rimworld.sk.noprisonersympathy");
 
-            LongEventHandler.QueueLongEvent(Init, "SK_No_Sympathy_For_Prisoners.Init", true, null);
+            LongEventHandler.QueueLongEvent(Init, "SK.noprisonersympathy.LoadingLabel", true, null);
         }
 
         public override string SettingsCategory()
@@ -39,7 +39,7 @@ namespace SK_No_Sympathy_For_Prisoners
 
             instance.PatchAll();
 
-            // Executio
+            // Execution
             List<string> blacklistedExecutionPreceptDefNames = new List<string>() { "Execution_Classic", "Execution_HorribleIfInnocent", "Execution_Horrible", "Execution_Abhorrent" };
             PatchState.blacklistExecutionPrecepts.AddRange(DefDatabase<PreceptDef>.AllDefsListForReading.FindAll(def => blacklistedExecutionPreceptDefNames.Contains(def.defName)));
             PatchState.targetExecutionHistoryEvents.AddRange(new List<HistoryEventDef>() { HistoryEventDefOf.ExecutedPrisoner, HistoryEventDefOf.ExecutedPrisonerGuilty, HistoryEventDefOf.ExecutedPrisonerInnocent, HistoryEventDefOf.InnocentPrisonerDied });
@@ -58,6 +58,11 @@ namespace SK_No_Sympathy_For_Prisoners
             List<string> blacklistedCannibalismPreceptDefNames = new List<string>() { "Cannibalism_Classic", "Cannibalism_Abhorrent", "Cannibalism_Horrible", "Cannibalism_Disapproved" };
             PatchState.blacklistCannibalismPrecepts.AddRange(DefDatabase<PreceptDef>.AllDefsListForReading.FindAll(def => blacklistedCannibalismPreceptDefNames.Contains(def.defName)));
             PatchState.targetCannibalismHistoryEvents.Add(HistoryEventDefOf.ButcheredHuman);
+
+            if (ModSettings.disableOrganHarvestingColonistsMoodDebuff)
+            {
+                PatchState.targetOraganHarvestingHistoryEvents.Add(HistoryEventDefOf.HarvestedOrganFromColonist);
+            }
         }
     }
 }

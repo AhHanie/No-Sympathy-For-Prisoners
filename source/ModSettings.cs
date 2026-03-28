@@ -7,6 +7,7 @@ namespace SK_No_Sympathy_For_Prisoners
         public static bool disableOrganHarvestingNegativeGoodwill = false;
         public static bool affectMoodInstead = false;
         public static float moodReductionPercentage = 40f;
+        public static bool disableOrganHarvestingColonistsMoodDebuff = false;
 
         public override void ExposeData()
         {
@@ -14,6 +15,7 @@ namespace SK_No_Sympathy_For_Prisoners
             Scribe_Values.Look(ref disableOrganHarvestingNegativeGoodwill, "disableOrganHarvestingNegativeGoodwill", false);
             Scribe_Values.Look(ref affectMoodInstead, "affectMoodInstead", false);
             Scribe_Values.Look(ref moodReductionPercentage, "moodReductionPercentage", 40f);
+            Scribe_Values.Look(ref disableOrganHarvestingColonistsMoodDebuff, "disableOrganHarvestingColonistsMoodDebuff", false);
         }
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+  <SK.noprisonersympathy.LoadingLabel>Dehumanizing your colonists ...</SK.noprisonersympathy.LoadingLabel>
   <SK.noprisonersympathy.ModSettings.organHarvsetingNegativeCheckboxLabel>Factions don't care about organ harvesting (Requires restart)</SK.noprisonersympathy.ModSettings.organHarvsetingNegativeCheckboxLabel>
   <SK.noprisonersympathy.ModSettings.organHarvsetingNegativeCheckboxTooltip>When enabled, a patch will be applied to remove all negative goodwill attained from organ harvesting.</SK.noprisonersympathy.ModSettings.organHarvsetingNegativeCheckboxTooltip>
   
@@ -8,4 +9,7 @@
   
   <SK.noprisonersympathy.ModSettings.moodReductionPercentageLabel>Mood penalty reduction</SK.noprisonersympathy.ModSettings.moodReductionPercentageLabel>
   <SK.noprisonersympathy.ModSettings.moodReductionPercentageTooltip>Percentage to reduce negative mood penalties by (0% = no reduction, 100% = complete removal)</SK.noprisonersympathy.ModSettings.moodReductionPercentageTooltip>
+
+  <SK.noprisonersympathy.ModSettings.disableOrganHarvestingColonistsMoodDebuffCheckboxLabel>Disable colonists organ harvesting mood debuff (Requires restart)</SK.noprisonersympathy.ModSettings.disableOrganHarvestingColonistsMoodDebuffCheckboxLabel>
+  <SK.noprisonersympathy.ModSettings.disableOrganHarvestingColonistsMoodDebuffCheckboxTooltip>By default arresting colonists and harvesting their organs still applies a mood debuff. Enabling this setting will disable that.</SK.noprisonersympathy.ModSettings.disableOrganHarvestingColonistsMoodDebuffCheckboxTooltip>
 </LanguageData>
